@@ -315,8 +315,10 @@ class PropertyPanel(wx.Panel):
         update_data({bulb.mac: {"name": new_name}})
 
     async def apply_preset(self, e):
-        presets = [list(n.keys())[0]
-                   for n in data.get(self.bulb.mac).get("presets")]
+        p = data.get(self.bulb.mac).get("presets")
+        if p is not None:
+            presets = [list(n.keys())[0]
+                       for n in p]
 
         async def apply(bulb, scene):
             await wiz_api.setBulb(bulb, scene=scene)
